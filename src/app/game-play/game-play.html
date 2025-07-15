@@ -1,0 +1,86 @@
+<div class="game-play">
+  @if (game && authUser) {
+    <h2>Juego #{{ game.id }}</h2>
+    <p>Estado: {{ game.status }}</p>
+    @if (game.status === 'finished' && game.winner) {
+      <p class="winner">
+        Ganador: {{ game.winner === game.player_1 ? game.player1.fullName : game.player2.fullName }}
+      </p>
+      <p class="loser">
+        Perdedor: {{ game.winner === game.player_1 ? game.player2?.fullName : game.player1.fullName }}
+      </p>
+    }
+    <div class="game-info">
+      <p>Tiempo restante para tu turno: {{ timeLeft }} segundos</p>
+      <p>Fallos por inactividad (Tú): {{ authUser.id === game.player_1 ? game.player_1_inactive_misses : game.player_2_inactive_misses }}</p>
+      <p>Fallos por inactividad (Oponente): {{ authUser.id === game.player_1 ? game.player_2_inactive_misses : game.player_1_inactive_misses }}</p>
+    </div>
+    <div class="boards">
+      <div class="board">
+        <h3>Tu Tablero</h3>
+        <div class="grid-container">
+          <div class="grid-labels">
+            <div class="corner"></div>
+            @for (col of [1,2,3,4,5,6,7,8]; let j = $index; track j) {
+              <div class="col-label">{{ col }}</div>
+            }
+          </div>
+          @for (row of playerBoard.grid; let i = $index; track i) {
+            <div class="row">
+              <div class="row-label">{{ i + 1 }}</div>
+              @for (cell of row; let j = $index; track j) {
+                <div
+                  class="cell"
+                  [ngClass]="{
+                    'ship': cell === 1,
+                    'hit': isHit(i, j, opponentMoves),
+                    'miss': isMiss(i, j, opponentMoves)
+                  }"
+                ></div>
+              }
+            </div>
+          }
+        </div>
+      </div>
+      @if (opponentBoard) {
+        <div class="board">
+          <h3>Tablero del Oponente</h3>
+          <div class="grid-container">
+            <div class="grid-labels">
+              <div class="corner"></div>
+              @for (col of [1,2,3,4,5,6,7,8]; let j = $index; track j) {
+                <div class="col-label">{{ col }}</div>
+              }
+            </div>
+            @for (row of opponentBoard.grid; let i = $index; track i) {
+              <div class="row">
+                <div class="row-label">{{ i + 1 }}</div>
+                @for (cell of row; let j = $index; track j) {
+                  <div
+                    class="cell"
+                    [ngClass]="{
+                      'hit': isHit(i, j, playerMoves),
+                      'miss': isMiss(i, j, playerMoves),
+                      'clickable': game.status === 'active' && isPlayerTurn && !isMoveMade(i, j, playerMoves)
+                    }"
+                    (click)="makeMove(j, i)"
+                  ></div>
+                }
+              </div>
+            }
+          </div>
+        </div>
+      }
+    </div>
+    @if (game.status === 'finished' && game.winner) {
+      <div class="game-result">
+        <a routerLink="/dashboard">Salir</a>
+      </div>
+    }
+    @if (errorMessage) {
+      <p class="error">{{ errorMessage }}</p>
+    }
+  } @else {
+    <p>Cargando...</p>
+  }
+</div>

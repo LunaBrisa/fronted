@@ -1,0 +1,22 @@
+<div class="game-list">
+  <h2>Juegos en Espera</h2>
+  @if (errorMessage) {
+    <p class="error">{{ errorMessage }}</p>
+  }
+  <button (click)="createGame()">Crear Nuevo Juego</button>
+  @if (games.length > 0) {
+    <ul>
+      @for (game of games; track game.id) {
+        <li>
+          <a routerLink="/games/{{ game.id }}">Juego #{{ game.id }} (Creado por {{ game.player1.fullName }})</a>
+          <button (click)="joinGame(game.id)">Unirse</button>
+          @if (game.player_1 === authUser?.id) {
+            <button (click)="cancelGame(game.id)">Cancelar</button>
+          }
+        </li>
+      }
+    </ul>
+  } @else {
+    <p>No hay juegos en espera.</p>
+  }
+</div>

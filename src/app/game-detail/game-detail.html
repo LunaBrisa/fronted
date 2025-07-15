@@ -1,0 +1,18 @@
+<div class="game-detail">
+  @if (game) {
+    <h2>Juego #{{ game.id }}</h2>
+    <p>Estado: {{ game.status }}</p>
+    <p>Jugador 1: {{ game.player1.fullName }}</p>
+    @if (game.player2) {
+      <p>Jugador 2: {{ game.player2.fullName }}</p>
+    } @else {
+      <p>Esperando segundo jugador...</p>
+    }
+    @if (game.status === 'active') {
+      <a routerLink="/games/{{ game.id }}/play">Jugar</a>
+      <button (click)="abandonGame()">Abandonar</button>
+    }
+  } @else {
+    <p>Cargando...</p>
+  }
+</div>

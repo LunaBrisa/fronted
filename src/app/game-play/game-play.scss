@@ -1,0 +1,138 @@
+.game-play {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+
+  p {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #333; // Color consistente para el texto
+  }
+
+  .game-info {
+    margin: 20px 0; // Espaciado consistente con otros elementos
+    p {
+      font-size: 16px;
+      color: #333;
+      margin-bottom: 8px; // Espaciado más pequeño entre párrafos dentro de game-info
+      &.timer {
+        font-weight: bold; // Resaltar el temporizador
+        color: #2563eb; // Color azul para destacar
+      }
+      &.inactive-misses {
+        color: #555; // Color más suave para los contadores
+      }
+    }
+  }
+
+  .winner {
+    color: green;
+    font-weight: bold;
+  }
+
+  .loser {
+    color: red;
+  }
+
+  .boards {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+  }
+
+  .board {
+    flex: 1;
+  }
+
+  .grid-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .grid-labels {
+    display: flex;
+    margin-left: 30px;
+  }
+
+  .corner {
+    width: 30px;
+    height: 30px;
+  }
+
+  .col-label {
+    width: 40px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 14px;
+  }
+
+  .row {
+    display: flex;
+  }
+
+  .row-label {
+    width: 30px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 14px;
+  }
+
+  .grid {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ccc;
+  }
+
+  .cell {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #ccc;
+    background-color: #e6f3ff;
+  }
+
+  .ship {
+    background-color: #4b5e7e;
+  }
+
+  .hit {
+    background-color: #ff4d4d;
+  }
+
+  .miss {
+    background-color: #cccccc;
+  }
+
+  .clickable {
+    cursor: pointer;
+    &:hover {
+      background-color: #b3d4ff;
+    }
+  }
+
+  .error {
+    color: red;
+    margin-top: 10px;
+  }
+
+  .game-result {
+    margin-top: 20px;
+    a {
+      color: #2563eb;
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}

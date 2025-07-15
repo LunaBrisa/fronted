@@ -1,0 +1,67 @@
+@if (isOpen) {
+  <div class="modal-overlay">
+    <div class="modal-content">
+      @if (!showDetails) {
+        <h2>Estadísticas de Juegos</h2>
+        @if (errorMessage) {
+          <p class="error">{{ errorMessage }}</p>
+        }
+        <ngx-charts-bar-vertical
+          [results]="barChartData"
+          [scheme]="colorScheme"
+          [xAxis]="true"
+          [yAxis]="true"
+          [showXAxisLabel]="true"
+          [showYAxisLabel]="true"
+          [xAxisLabel]="'Categorías'"
+          [yAxisLabel]="'Cantidad'"
+          [legend]="true"
+          [legendTitle]="'Estadísticas'"
+          [roundDomains]="true"
+          [yScaleMin]="0"
+          [yAxisTickFormatting]="formatAxis"
+          [animations]="false"
+          (select)="onSelect($event)"
+        ></ngx-charts-bar-vertical>
+        @if (showTable && filteredGames.length) {
+          <div class="games-table">
+            <h3>Detalles de Partidas</h3>
+            <table>
+              <thead>
+              <tr>
+                <th>ID del Juego</th>
+                <th>Oponente</th>
+                <th>Resultado</th>
+                <th>Acción</th>
+              </tr>
+              </thead>
+              <tbody>
+                @for (game of filteredGames; track game.id) {
+                  <tr>
+                    <td>{{ game.id }}</td>
+                    <td>{{ getOpponentName(game) }}</td>
+                    <td>{{ getResult(game) }}</td>
+                    <td>
+                      <button class="details-btn" (click)="viewGameDetails(game)">Ver Detalles</button>
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        }
+        @if (showTable && !filteredGames.length) {
+          <p>No hay partidas para mostrar.</p>
+        }
+        <button class="secondary" (click)="closeModal()">Cerrar</button>
+      } @else {
+        <app-game-details
+          [game]="selectedGame"
+          [userId]="userId"
+          [isOpen]="showDetails"
+          (close)="closeDetails()"
+        ></app-game-details>
+      }
+    </div>
+  </div>
+}

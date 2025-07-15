@@ -1,0 +1,89 @@
+@if (isOpen && game && userId) {
+  <div class="modal-overlay">
+    <div class="modal-content">
+      <h2>Detalles del Juego #{{ game.id }}</h2>
+      <div class="boards">
+        <div class="board">
+          <h3>Tu Tablero</h3>
+          <div class="grid-container">
+            <div class="grid-labels">
+              <div class="corner"></div>
+              @for (col of [1,2,3,4,5,6,7,8]; let j = $index; track j) {
+                <div class="col-label">{{ col }}</div>
+              }
+            </div>
+            @for (row of playerBoard.grid; let i = $index; track i) {
+              <div class="row">
+                <div class="row-label">{{ i + 1 }}</div>
+                @for (cell of row; let j = $index; track j) {
+                  <div
+                    class="cell"
+                    [ngClass]="{
+                      'ship': cell === 1,
+                      'hit': isHit(i, j, opponentMoves),
+                      'miss': isMiss(i, j, opponentMoves)
+                    }"
+                  ></div>
+                }
+              </div>
+            }
+          </div>
+        </div>
+        <div class="board">
+          <h3>Tablero del Oponente</h3>
+          <div class="grid-container">
+            <div class="grid-labels">
+              <div class="corner"></div>
+              @for (col of [1,2,3,4,5,6,7,8]; let j = $index; track j) {
+                <div class="col-label">{{ col }}</div>
+              }
+            </div>
+            @for (row of opponentBoard.grid; let i = $index; track i) {
+              <div class="row">
+                <div class="row-label">{{ i + 1 }}</div>
+                @for (cell of row; let j = $index; track j) {
+                  <div
+                    class="cell"
+                    [ngClass]="{
+                      'ship': cell === 1,
+                      'hit': isHit(i, j, playerMoves),
+                      'miss': isMiss(i, j, playerMoves)
+                    }"
+                  ></div>
+                }
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+      <div class="moves-table">
+        <h3>Movimientos</h3>
+        @if (game.moves.length) {
+          <table>
+            <thead>
+            <tr>
+              <th>Jugador</th>
+              <th>Coordenadas</th>
+              <th>Resultado</th>
+              <th>Fecha</th>
+            </tr>
+            </thead>
+            <tbody>
+              @for (move of game.moves; track move.id) {
+                <tr>
+                  <td>{{ getPlayerName(move.playerId) }}</td>
+                  <td>({{ move.x + 1 }}, {{ move.y + 1 }})</td>
+                  <td>{{ move.result === 'hit' ? 'Impacto' : 'Fallo' }}</td>
+                  <td>{{ move.createdAt }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        } @else {
+          <p>No hay movimientos registrados.</p>
+        }
+      </div>
+      <button class="secondary" (click)="closeModal()">Cerrar</button>
+    </div>
+  </div>
+}

@@ -1,0 +1,13 @@
+<div class="dashboard">
+  @if (user) {
+    <h2>Bienvenido, {{ user.fullName }}</h2>
+    <nav>
+      <a routerLink="/games">Ver Juegos</a>
+      <button (click)="stats()">Ver estadisticas</button>
+      <button (click)="logout()">Cerrar Sesión</button>
+    </nav>
+    <app-modal [isOpen]="showModal" (close)="closeModal()"></app-modal>
+  } @else {
+    <p>Cargando...</p>
+  }
+</div>
