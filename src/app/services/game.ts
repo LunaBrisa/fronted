@@ -63,7 +63,7 @@ interface PollResponse {
   providedIn: 'root',
 })
 export class GameService {
-  private apiUrl = 'http://localhost:52792/api';
+  private apiUrl = 'http://localhost:3333/api';
 
   constructor(private http: HttpClient) {}
 

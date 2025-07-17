@@ -215,4 +215,21 @@ export class GamePlayComponent implements OnInit, OnDestroy {
     console.log(`chekin ssi el mov en (row: ${row}, col: ${col}) es made:`, { made, moves });
     return made;
   }
+
+  abandonGame() {
+  if (!confirm('¿Estás segura/o de que deseas abandonar la partida? Esto contará como derrota.')) return;
+
+  this.gameService.abandonGame(this.game.id).subscribe({
+    next: (response) => {
+      console.log('Partida abandonada:', response);
+      this.game = response.game;
+      this.errorMessage = null;
+    },
+    error: (err) => {
+      console.error('Error al abandonar la partida:', err);
+      this.errorMessage = err.error?.error || 'No se pudo abandonar la partida';
+    }
+  });
+}
+
 }

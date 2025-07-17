@@ -56,33 +56,7 @@
           </div>
         </div>
       </div>
-      <div class="moves-table">
-        <h3>Movimientos</h3>
-        @if (game.moves.length) {
-          <table>
-            <thead>
-            <tr>
-              <th>Jugador</th>
-              <th>Coordenadas</th>
-              <th>Resultado</th>
-              <th>Fecha</th>
-            </tr>
-            </thead>
-            <tbody>
-              @for (move of game.moves; track move.id) {
-                <tr>
-                  <td>{{ getPlayerName(move.playerId) }}</td>
-                  <td>({{ move.x + 1 }}, {{ move.y + 1 }})</td>
-                  <td>{{ move.result === 'hit' ? 'Impacto' : 'Fallo' }}</td>
-                  <td>{{ move.createdAt }}</td>
-                </tr>
-              }
-            </tbody>
-          </table>
-        } @else {
-          <p>No hay movimientos registrados.</p>
-        }
-      </div>
+
       <button class="secondary" (click)="closeModal()">Cerrar</button>
     </div>
   </div>

@@ -14,7 +14,11 @@
       <p>Tiempo restante para tu turno: {{ timeLeft }} segundos</p>
       <p>Fallos por inactividad (Tú): {{ authUser.id === game.player_1 ? game.player_1_inactive_misses : game.player_2_inactive_misses }}</p>
       <p>Fallos por inactividad (Oponente): {{ authUser.id === game.player_1 ? game.player_2_inactive_misses : game.player_1_inactive_misses }}</p>
-    </div>
+      @if (game.status === 'active') {
+  <button class="abandon-button" (click)="abandonGame()">Abandonar partida</button>
+      }   
+</div>
+    
     <div class="boards">
       <div class="board">
         <h3>Tu Tablero</h3>

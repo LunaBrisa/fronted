@@ -1,22 +1,29 @@
-<div class="game-list">
+<div class="game-list-container">
   <h2>Juegos en Espera</h2>
+
   @if (errorMessage) {
     <p class="error">{{ errorMessage }}</p>
   }
-  <button (click)="createGame()">Crear Nuevo Juego</button>
+
+  <button class="btn-primary" (click)="createGame()">Crear Nuevo Juego</button>
+
   @if (games.length > 0) {
-    <ul>
+    <ul class="game-list">
       @for (game of games; track game.id) {
-        <li>
-          <a routerLink="/games/{{ game.id }}">Juego #{{ game.id }} (Creado por {{ game.player1.fullName }})</a>
-          <button (click)="joinGame(game.id)">Unirse</button>
-          @if (game.player_1 === authUser?.id) {
-            <button (click)="cancelGame(game.id)">Cancelar</button>
-          }
+        <li class="game-item">
+          <a class="game-link" routerLink="/games/{{ game.id }}">
+            Juego #{{ game.id }} (Creado por {{ game.player1.fullName }})
+          </a>
+          <div class="game-actions">
+            <button class="btn-secondary" (click)="joinGame(game.id)">Unirse</button>
+            @if (game.player_1 === authUser?.id) {
+              <button class="btn-danger" (click)="cancelGame(game.id)">Cancelar</button>
+            }
+          </div>
         </li>
       }
     </ul>
   } @else {
-    <p>No hay juegos en espera.</p>
+    <p class="no-games">No hay juegos en espera.</p>
   }
 </div>

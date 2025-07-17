@@ -1,13 +1,19 @@
-<div class="dashboard">
+<div class="dashboard-container">
   @if (user) {
     <h2>Bienvenido, {{ user.fullName }}</h2>
-    <nav>
-      <a routerLink="/games">Ver Juegos</a>
-      <button (click)="stats()">Ver estadisticas</button>
-      <button (click)="logout()">Cerrar Sesión</button>
-    </nav>
+
+    <!-- Modal con opciones -->
+    <div class="options-modal">
+      <div class="modal-content">
+        <a routerLink="/games" class="nav-button">Ver Juegos</a>
+        <button (click)="stats()" class="nav-button">Ver estadísticas</button>
+        <button (click)="logout()" class="nav-button logout">Cerrar Sesión</button>
+      </div>
+    </div>
+
+    <!-- Modal de estadísticas -->
     <app-modal [isOpen]="showModal" (close)="closeModal()"></app-modal>
   } @else {
-    <p>Cargando...</p>
+    <p class="loading">Cargando...</p>
   }
 </div>
